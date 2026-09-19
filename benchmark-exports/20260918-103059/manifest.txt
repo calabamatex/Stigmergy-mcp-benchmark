@@ -1,0 +1,16 @@
+Export timestamp: Fri Sep 18 10:30:59 EDT 2026
+Source database:  ./stigmergy-benchmark.db
+Database size:    5.7M
+Git branch:       results/phase-1-data
+Git commit:       0a820eb11798d33c8e8c72fe99c9b2319a6a6adc
+
+Tables exported:
+  - token_usage:        per-API-call token records
+  - comparison_results: aggregated run-level results
+  - trial_results:      individual trial records
+  - trial_subtotals:    pre-aggregated per-trial subtotals (derived view)
+
+Files:
+  - *.csv files are UTF-8 with header rows
+  - schema.sql contains DDL for reproducing the database
+  - stigmergy-benchmark.db.gz is the full SQLite file, compressed
