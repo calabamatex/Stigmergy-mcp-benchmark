@@ -10,10 +10,7 @@ import {
 
 const classifier = new RuleClassifier();
 
-function makeRequest(
-  runType: RunType,
-  messages: Message[] = [],
-): CompletionRequest {
+function makeRequest(runType: RunType, messages: Message[] = []): CompletionRequest {
   return {
     model: 'test',
     messages,
@@ -68,7 +65,10 @@ describe('Run A (Single Agent)', () => {
 
 describe('Run B (Message-Passing)', () => {
   it('classifies system prompt as SYSTEM_IDENTITY', () => {
-    const msg: Message = { role: 'system', content: 'You are a code reviewer. Focus on security issues.' };
+    const msg: Message = {
+      role: 'system',
+      content: 'You are a code reviewer. Focus on security issues.',
+    };
     const req = makeRequest(RunType.MESSAGE_PASSING, [msg]);
     expect(classifier.classifyMessage(msg, req)).toBe(TokenCategory.SYSTEM_IDENTITY);
   });
@@ -76,7 +76,8 @@ describe('Run B (Message-Passing)', () => {
   it('classifies system prompt with coordination as COORDINATION_INSTRUCTIONS', () => {
     const msg: Message = {
       role: 'system',
-      content: 'You are agent 2 of 3. Your role is to review what Agent 1 found and continue the analysis.',
+      content:
+        'You are agent 2 of 3. Your role is to review what Agent 1 found and continue the analysis.',
     };
     const req = makeRequest(RunType.MESSAGE_PASSING, [msg]);
     expect(classifier.classifyMessage(msg, req)).toBe(TokenCategory.COORDINATION_INSTRUCTIONS);
@@ -85,7 +86,8 @@ describe('Run B (Message-Passing)', () => {
   it('classifies user message with previous agent output as CONTENT_TRANSFER', () => {
     const msg: Message = {
       role: 'user',
-      content: "Here is the output produced by Agent 1:\n```\nfunction sort(arr) { return arr.sort(); }\n```",
+      content:
+        'Here is the output produced by Agent 1:\n```\nfunction sort(arr) { return arr.sort(); }\n```',
     };
     const req = makeRequest(RunType.MESSAGE_PASSING, [msg]);
     expect(classifier.classifyMessage(msg, req)).toBe(TokenCategory.CONTENT_TRANSFER);
@@ -94,7 +96,8 @@ describe('Run B (Message-Passing)', () => {
   it('classifies user coordination text as COORDINATION_INSTRUCTIONS', () => {
     const msg: Message = {
       role: 'user',
-      content: 'The previous agent produced the following analysis. Please continue from where they left off.',
+      content:
+        'The previous agent produced the following analysis. Please continue from where they left off.',
     };
     const req = makeRequest(RunType.MESSAGE_PASSING, [msg]);
     expect(classifier.classifyMessage(msg, req)).toBe(TokenCategory.COORDINATION_INSTRUCTIONS);
@@ -134,7 +137,8 @@ describe('Run C (Stigmergy)', () => {
   it('classifies system prompt with tool instructions as COORDINATION_INSTRUCTIONS', () => {
     const msg: Message = {
       role: 'system',
-      content: 'Use these tools in order: 1. sense_environment to check for signals, 2. deposit_trace when done.',
+      content:
+        'Use these tools in order: 1. sense_environment to check for signals, 2. deposit_trace when done.',
     };
     const req = makeRequest(RunType.STIGMERGY, [msg]);
     expect(classifier.classifyMessage(msg, req)).toBe(TokenCategory.COORDINATION_INSTRUCTIONS);
@@ -146,20 +150,22 @@ describe('Run C (Stigmergy)', () => {
     expect(classifier.classifyMessage(msg, req)).toBe(TokenCategory.MECHANISM_OVERHEAD);
   });
 
-  it('classifies tool definitions as TASK_REASONING for baseline', () => {
+  it('classifies tool definitions as MECHANISM_OVERHEAD for baseline', () => {
     const msg: Message = { role: 'system', content: '[tool-definitions]' };
     const req = makeRequest(RunType.MESSAGE_PASSING, [msg]);
-    expect(classifier.classifyMessage(msg, req)).toBe(TokenCategory.TASK_REASONING);
+    expect(classifier.classifyMessage(msg, req)).toBe(TokenCategory.MECHANISM_OVERHEAD);
   });
 
   it('classifies stigmergy tool_use output as MECHANISM_OVERHEAD', () => {
     const resp: CompletionResponse = {
-      content: [{
-        type: 'tool_use',
-        id: 'call-1',
-        name: 'deposit_trace',
-        input: { area: 'src/', action: 'reviewed code' },
-      }],
+      content: [
+        {
+          type: 'tool_use',
+          id: 'call-1',
+          name: 'deposit_trace',
+          input: { area: 'src/', action: 'reviewed code' },
+        },
+      ],
       usage: { input_tokens: 200, output_tokens: 50 },
       stopReason: 'tool_use',
     };
@@ -169,12 +175,14 @@ describe('Run C (Stigmergy)', () => {
 
   it('classifies non-stigmergy tool_use output as TASK_REASONING', () => {
     const resp: CompletionResponse = {
-      content: [{
-        type: 'tool_use',
-        id: 'call-1',
-        name: 'read_file',
-        input: { path: 'src/index.ts' },
-      }],
+      content: [
+        {
+          type: 'tool_use',
+          id: 'call-1',
+          name: 'read_file',
+          input: { path: 'src/index.ts' },
+        },
+      ],
       usage: { input_tokens: 200, output_tokens: 50 },
       stopReason: 'tool_use',
     };

@@ -37,11 +37,12 @@ export class RuleClassifier {
         : TokenCategory.TASK_REASONING;
     }
 
-    // Tool definitions marker → Mechanism Overhead for stigmergy, Task Reasoning for baseline
+    // Tool definitions are mechanism overhead under every run type.
+    // A condition-dependent rule here would exclude a future tool-based
+    // control's schemas from the coordination estimand while including the
+    // trace condition's; see the technical report, Section 5.3.
     if (text === TOOL_DEFINITION_MARKER) {
-      return runType === RunType.STIGMERGY
-        ? TokenCategory.MECHANISM_OVERHEAD
-        : TokenCategory.TASK_REASONING;
+      return TokenCategory.MECHANISM_OVERHEAD;
     }
 
     // System messages
