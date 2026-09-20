@@ -5,6 +5,21 @@ All notable changes to the Stigmergy-MCP Benchmark will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased] - 2026-09
+
+### Changed
+
+- Documentation aligned with the technical report: results are exploratory and
+  descriptive; no matched-fidelity efficiency, no observed crossover, and no
+  mechanism-specific stigmergic advantage is claimed. Per-agent retrieved
+  content grew from N=5 to N=10, so the linear trace form is a hypothesis to
+  measure, not a property of the architecture.
+
+### Added
+
+- Trial-level export for the canonical ten-trial N=10 cell and the N=5 to 8
+  extension cells (`benchmark-exports/20260918-103059/`).
+
 ## [0.1.0-alpha.1] - 2026-04-05
 
 ### Added
