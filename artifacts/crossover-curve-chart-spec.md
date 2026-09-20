@@ -1,3 +1,5 @@
+> **Superseded (September 2026):** This specification predates the within-family sweep at N = 5, 6, 7, 10. In that sweep no crossover was observed (trace coordination was cheaper at every tested N), so the intersection this chart was designed to show does not exist in the measured data, and the "≈ 4 agents" label must not be used. The technical report's Figure 1 replaces this chart.
+
 # Crossover Curve Chart: Specification & Data Collection Plan
 
 **Purpose:** Specify the headline visualization for Phase 1 of the stigmergy-mcp benchmark, and provide the commands needed to fill in the missing data points (agent counts 5, 6, 7, 8) before publishing.
@@ -49,12 +51,12 @@ Shade a translucent band around each line representing the 95 percent confidence
 
 These data points already exist in SQLite from Phase 1 runs and can be plotted immediately.
 
-| Agent Count | n | Run B (median tokens) | Run C (median tokens) | Source Run |
-|-------------|---|----------------------|----------------------|------------|
-| 1 | 5 | 88 | 3,400 | single-agent-null audit run |
-| 2 | 5 | 289 | 7,706 | tiny-handoff audit run |
-| 3 | 5 | ~3,900 | ~3,500 | research-report audit run |
-| 10 | 10 | 129,400 | 70,400 | canonical Phase 1 run |
+| Agent Count | n   | Run B (median tokens) | Run C (median tokens) | Source Run                  |
+| ----------- | --- | --------------------- | --------------------- | --------------------------- |
+| 1           | 5   | 88                    | 3,400                 | single-agent-null audit run |
+| 2           | 5   | 289                   | 7,706                 | tiny-handoff audit run      |
+| 3           | 5   | ~3,900                | ~3,500                | research-report audit run   |
+| 10          | 10  | 129,400               | 70,400                | canonical Phase 1 run       |
 
 (Values for agent count 3 are approximate; exact medians need to be re-extracted from SQLite. Run the export script and pull from `trial_subtotals.csv`.)
 

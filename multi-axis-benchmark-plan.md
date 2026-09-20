@@ -1,3 +1,5 @@
+> **Status (September 2026):** planning log, not results. Statements here about crossover location, confirmed findings, and recommended public claims are superseded by the technical report, which found no crossover in the N = 5 to 10 pipeline sweep and makes no matched-fidelity or mechanism-specific claim.
+
 # Multi-Axis Benchmark Plan: Stigmergy-MCP
 
 **Status:** Phase 1 canonical FULL-tier result obtained at n=10. First positive savings datum below n=10 obtained at n=5 (PRELIMINARY tier). Crossover bounded between 3 and 5 agents on sequential tasks. Six, seven, and eight-agent runs pending API credit top-up. Cross-validation still flags UNRELIABLE due to low-variance regime issue — must be addressed before publication.
@@ -12,13 +14,13 @@ Capture the framing for expanding the stigmergy-mcp benchmark from its current s
 
 The thesis is confirmed across multiple agent counts on a sequential pipeline task family (write an N-section guide to building a production-ready REST API):
 
-| Agent Count | Tier | n | Inter-Agent Savings | CT Savings | Effective Savings | Notes |
-|---|---|---|---------------------|------------|-------------------|-------|
-| 1 | PRELIMINARY | 5 | -3803% | 0% | -841% | Validator (no coordination work) |
-| 2 | PRELIMINARY | 5 | -2600% | -552% | -1884% | Stigmergy unamortized at low N |
-| 3 | PRELIMINARY | 5 | -100% | — | -79% | CI crosses zero ([-170, +6]) |
-| **5** | **PRELIMINARY** | **7** | **+35%** | **+91%** | **+50%** | **First positive result below n=10** |
-| **10** | **FULL** | **10** | **+46%** | **+72%** | **+30%** | **Canonical, p = 0.002** |
+| Agent Count | Tier            | n      | Inter-Agent Savings | CT Savings | Effective Savings | Notes                                |
+| ----------- | --------------- | ------ | ------------------- | ---------- | ----------------- | ------------------------------------ |
+| 1           | PRELIMINARY     | 5      | -3803%              | 0%         | -841%             | Validator (no coordination work)     |
+| 2           | PRELIMINARY     | 5      | -2600%              | -552%      | -1884%            | Stigmergy unamortized at low N       |
+| 3           | PRELIMINARY     | 5      | -100%               | —          | -79%              | CI crosses zero ([-170, +6])         |
+| **5**       | **PRELIMINARY** | **7**  | **+35%**            | **+91%**   | **+50%**          | **First positive result below n=10** |
+| **10**      | **FULL**        | **10** | **+46%**            | **+72%**   | **+30%**          | **Canonical, p = 0.002**             |
 
 **Crossover bounded between 3 and 5 agents on sequential tasks.** Most likely close to n=4 based on the steepness of the transition between 3 and 5.
 
@@ -81,6 +83,7 @@ Demonstrates that crossover exists on the agent-count axis. Establishes methodol
 Status: canonical FULL-tier result achieved at n=10 on April 28, 2026. Five-agent extension data obtained on April 29 (n=7, PRELIMINARY tier). Six, seven, and eight-agent runs pending API credit top-up.
 
 To complete Phase 1:
+
 - Six-agent-pipeline at n=10 FULL tier
 - Seven-agent-pipeline at n=10 FULL tier
 - Eight-agent-pipeline at n=10 FULL tier
@@ -222,7 +225,7 @@ Track significant runs and findings in chronological order. Append, do not overw
   - Effective Savings: 30.1 percent, CI [20.0, 37.5], **Wilcoxon p = 0.002**
   - Content Transfer Savings: 71.9 percent, CI [67.2, 76.0]
   - **FULL tier** (10-19 trials).
-  - First run with formal hypothesis test results. p = 0.002 indicates the probability of observing this difference under the null hypothesis is roughly 1 in 500.
+  - First run with formal hypothesis test results. p = 0.002 is the minimum attainable two-sided value for a ten-trial paired test; it records that all ten paired differences shared a sign and says nothing about effect size or about the probability that there is no effect.
 - Run B inter-agent total: 129.4k tokens (CT 127.3k).
 - Run C inter-agent total: 70.4k tokens (CT 36.7k + MO 25.5k + CI 8.1k).
 - Task Reasoning: 77.2k vs 75.9k (1.7 percent delta, within noise).

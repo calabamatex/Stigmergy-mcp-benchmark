@@ -1,3 +1,5 @@
+> **Note (September 2026):** This file contains explanatory analogies for writing, not results. Numbers and claims belong to the technical report, which supersedes anything stated here.
+
 # Explaining Stigmergy: Two Analogies for Non-Technical Audiences
 
 **Purpose:** Make the architectural argument for stigmergy-based AI coordination accessible to readers without a technical background. Each analogy stands alone and can be adapted for different audiences (LinkedIn post, blog article, internal pitch deck, conference talk).
@@ -35,7 +37,7 @@ The thesis being tested is not "this new approach beats the old one." It is "the
 ### Adaptation notes for the kitchen analogy
 
 - **For a LinkedIn post (300-500 words):** Open with the kitchen scene and end at the math flipping. Skip the methodology paragraph. Add a one-line link to the benchmark.
-- **For a blog article (1000-2000 words):** Use the full version. Add a section after "the math flips" that explains the actual numbers from the benchmark (46 percent reduction, 10 agents, p = 0.002).
+- **For a blog article (1000-2000 words):** Use the full version. If you add numbers, take them from the technical report and include its limitations (no fidelity measurement; savings did not grow with agent count).
 - **For a pitch deck:** Distill to three slides. Slide 1: two kitchens (illustration). Slide 2: cost equations as simple bar charts. Slide 3: where stigmergy wins.
 - **For a conference talk:** Keep the analogy in the introduction (90 seconds). Then transition to actual data and methodology.
 
@@ -61,7 +63,7 @@ The stigmergy approach replaces the direct messaging with a shared environment, 
 
 The benchmark behind this work is measuring where the trade-off flips. With small AI systems, direct communication wins because the setup cost of the shared environment is too high. With large AI systems, the shared environment wins because direct communication has grown out of control. Somewhere in the middle is a crossover point, and finding it precisely tells builders of multi-agent AI systems when to use which approach.
 
-The early results suggest the crossover is between three and ten agents. Above ten, the shared environment approach saves roughly half the communication cost. The savings get larger as the system grows. Below three, direct communication is still simpler and cheaper. The interesting question, the one this benchmark is designed to answer with rigor, is what happens between those numbers.
+In the one pipeline task measured so far, the shared-environment approach used fewer coordination tokens at every tested size from five to ten agents, but the saving did not grow with size, because each agent read more as the system grew. Below three agents, direct communication is simpler and cheaper. Whether the outputs were as good was not measured, and that question comes before any claim about where the trade-off flips.
 
 For executives running organizations that build with AI: this is a scaling decision. If your multi-agent systems are small, do nothing differently. If they are large or growing fast, start evaluating the shared-environment approach. The savings compound at scale.
 

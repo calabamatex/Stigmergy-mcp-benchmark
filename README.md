@@ -1,6 +1,6 @@
 # Stigmergy Benchmark
 
-Empirical benchmark proving stigmergic coordination reduces inter-agent token usage compared to message-passing multi-agent orchestration.
+Exploratory harness for measuring inter-agent coordination cost in multi-agent LLM systems. It compares full-history message passing with trace-based coordination via [stigmergy-mcp](https://github.com/calabamatex/stigmergy-mcp) and decomposes every API call into five functional token categories. Current results are descriptive: trace coordination used fewer coordination tokens than full-history handoff at every tested agent count from 5 to 10 in one pipeline task on one model, but output fidelity was not measured, bounded-summary and shared-state controls were not run, and per-agent retrieved content grew with agent count. See the technical report for the model, the protocol, and the limitations.
 
 ## What It Does
 
@@ -8,7 +8,7 @@ Runs the **same task** through three architectures, measures token usage across 
 
 | Run | Architecture          | Purpose                                                                                                  |
 | --- | --------------------- | -------------------------------------------------------------------------------------------------------- |
-| A   | Single Agent          | Autonomous cost floor (no coordination)                                                                  |
+| A   | Single Agent          | Single-agent reference (no coordination; not workload-matched to the pipeline sweep)                     |
 | B   | Message-Passing Swarm | Control: agents share cumulative conversation history                                                    |
 | C   | Stigmergy Swarm       | Experimental: agents coordinate via [stigmergy-mcp](https://github.com/calabamatex/stigmergy-mcp) traces |
 
@@ -22,7 +22,7 @@ Every API call's tokens are classified into exactly one category:
 - **Task Reasoning (TR)** — the agent's actual thinking and output
 - **System Identity (SI)** — base system prompt
 
-**Key insight:** In message-passing, CT grows O(N^2) as each agent ingests all predecessors. In stigmergy, CT is O(N) — agents read compact trace summaries instead.
+**Cost model (conditional):** Under full-history message passing, CT grows as O(N^2) because each agent ingests all predecessors. Under trace-based coordination, CT grows as O(N) _only if_ the content each agent retrieves stays bounded as N grows. Phase 1 measurements show it did not stay bounded from N=5 to N=10: retrieved content per agent rose from about 0.6k to about 3.7k tokens while fixed per-agent overhead stayed flat. Treat linearity as a hypothesis the harness measures, not a property of the architecture.
 
 ## Full Guide
 
@@ -87,14 +87,14 @@ The dashboard provides:
 
 ## Benchmark Tasks
 
-| ID                    | Name                     | Agents | Category   | Purpose                                 |
-| --------------------- | ------------------------ | ------ | ---------- | --------------------------------------- |
-| research-report       | Research Report Pipeline | 3      | Sequential | Tests CT growth in sequential handoffs  |
-| multi-source-analysis | Multi-Source Analysis    | 4      | Parallel   | Tests parallel fan-out + synthesis      |
-| code-review           | Iterative Code Review    | 3      | Iterative  | Tests iterative refinement patterns     |
-| single-agent-null     | Single Agent (Null)      | 1      | —          | Validates instrumentation (~0% savings) |
-| tiny-handoff          | Two-Agent Tiny Handoff   | 2      | Sequential | Crossover detection (TOST)              |
-| ten-agent-pipeline    | Ten-Agent Pipeline       | 10     | Sequential | Tests O(N^2) vs O(N) scaling            |
+| ID                    | Name                     | Agents | Category   | Purpose                                           |
+| --------------------- | ------------------------ | ------ | ---------- | ------------------------------------------------- |
+| research-report       | Research Report Pipeline | 3      | Sequential | Tests CT growth in sequential handoffs            |
+| multi-source-analysis | Multi-Source Analysis    | 4      | Parallel   | Tests parallel fan-out + synthesis                |
+| code-review           | Iterative Code Review    | 3      | Iterative  | Tests iterative refinement patterns               |
+| single-agent-null     | Single Agent (Null)      | 1      | —          | Validates instrumentation (~0% savings)           |
+| tiny-handoff          | Two-Agent Tiny Handoff   | 2      | Sequential | Crossover detection (TOST)                        |
+| ten-agent-pipeline    | Ten-Agent Pipeline       | 10     | Sequential | Quadratic-handoff form vs linear-trace hypothesis |
 
 ## Statistical Methodology
 
@@ -103,7 +103,8 @@ The dashboard provides:
 - **Wilcoxon signed-rank:** Exact tables for n <= 20, normal approximation for n > 20
 - **TOST equivalence:** For crossover tasks, tests if savings are within +/-5%
 - **Progressive reporting:** RAW_ONLY (n<3) -> PROVISIONAL (3-4) -> PRELIMINARY (5-9) -> FULL (10-19) -> PUBLICATION (20+)
-- **Cross-validation:** Drift threshold calibrated against Run A variance (2x CV)
+- **Cross-validation:** Drift threshold calibrated against Run A variance (2x CV). At temperature 0 the Run A CV is near zero, so the flag fires on nearly every trial and is uninformative for the Phase 1 runs.
+- **Reporting tiers are sample-count labels only.** `PUBLICATION` is a legacy name for 20+ valid trials and does not assert publication readiness. No Phase 1 cell reached it.
 
 ## Architecture
 
