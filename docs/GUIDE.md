@@ -91,7 +91,7 @@ Six tasks test different multi-agent coordination patterns:
 | `code-review`           | Iterative Code Review    | 3      | Iterative  | No        | Tests iterative refinement patterns                  |
 | `single-agent-null`     | Single Agent (Null)      | 1      | —          | No        | Validates instrumentation (~0% savings expected)     |
 | `tiny-handoff`          | Two-Agent Tiny Handoff   | 2      | Sequential | Yes       | Crossover detection (TOST equivalence)               |
-| `ten-agent-pipeline`    | Ten-Agent Pipeline       | 10     | Sequential | No        | Tests extreme O(N^2) vs O(N) scaling                 |
+| `ten-agent-pipeline`    | Ten-Agent Pipeline       | 10     | Sequential | No        | Quadratic-handoff form vs linear-trace hypothesis    |
 
 **Crossover tasks** test whether stigmergy and message-passing produce equivalent results. They require at least 15 trials for adequate TOST statistical power.
 
