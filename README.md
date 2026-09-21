@@ -1,5 +1,7 @@
 # Stigmergy Benchmark
 
+![Infographic comparing message-passing and stigmergic coordination: accumulated predecessor outputs under full-history handoff, compact decaying traces in a shared environment, and Phase 1 token savings from 2 to 10 agents](docs/images/stigmergy-benchmark-hero.png)
+
 Exploratory harness for measuring inter-agent coordination cost in multi-agent LLM systems. It compares full-history message passing with trace-based coordination via [stigmergy-mcp](https://github.com/calabamatex/stigmergy-mcp) and decomposes every API call into five functional token categories. Current results are descriptive: trace coordination used fewer coordination tokens than full-history handoff at every tested agent count from 5 to 10 in one pipeline task on one model, but output fidelity was not measured, bounded-summary and shared-state controls were not run, and per-agent retrieved content grew with agent count. See the technical report for the model, the protocol, and the limitations.
 
 ## Results
