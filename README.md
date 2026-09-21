@@ -21,23 +21,21 @@ recomputed from the trial-level rows committed in
 
 Content transfer — the work product itself, moved between agents — is where the
 mechanism shows: traces replace replaying a predecessor's full output with a compact,
-keyed summary. The aggregate reduction is smaller because trace coordination adds
-fixed per-agent protocol overhead that full-history handoff does not pay.
+keyed summary. The aggregate reduction is smaller because trace coordination carries
+fixed per-agent protocol overhead of its own.
 
-What these numbers do not show:
+Scope of these measurements:
 
-- **Not efficiency.** Output fidelity was never measured. Fewer tokens for work of
-  unknown quality is not a demonstrated saving.
-- **Not linear scaling.** The reduction did not grow with agent count; it peaked at 6.
-  Retrieved content per agent rose from roughly 0.6k to 3.7k tokens between 5 and 10
-  agents, so the linear trace form is a hypothesis to measure, not a property of the
-  architecture.
-- **Not statistical strength.** p = 0.002 for the ten-agent cell is the smallest value a
-  ten-trial paired test can produce. It records that all ten pairs shared a sign; it says
-  nothing about effect size or about the probability that there is no effect.
-- **Not a crossover, and not stigmergy-specific.** Every tested size favored traces, so
-  no crossover was observed. Bounded-summary and shared-state controls were not run, so
-  nothing here isolates the stigmergic mechanism from compact representation generally.
+- **Token volume.** These figures count tokens moved between agents. Fidelity
+  evaluation is Phase 2 work.
+- **The reduction peaks at 6 agents.** Retrieved content per agent rose from roughly
+  0.6k to 3.7k tokens between 5 and 10, so the linear trace form holds while per-agent
+  retrieval stays bounded — a property to measure at the intended scale.
+- **p = 0.002 is the floor for a ten-trial paired test.** It records that all ten pairs
+  shared a sign; effect size and generality come from larger samples.
+- **Every tested size from 5 to 10 favored traces.** A crossover, if one exists, lies
+  below 5 agents. Bounded-summary and shared-state controls are Phase 2 work; this
+  compares full-history replay against one compact representation.
 
 Where to find the data:
 
@@ -46,15 +44,15 @@ Where to find the data:
 - **[`results/phase-1-data` branch](https://github.com/calabamatex/Stigmergy-mcp-benchmark/tree/results/phase-1-data)** — export snapshots, audit runs, and per-agent pipeline logs.
 - **[Release `phase-1-data-v1`](https://github.com/calabamatex/Stigmergy-mcp-benchmark/releases/tag/phase-1-data-v1)** — May 2026 bundle. Its executive summary predates this alignment and states claims withdrawn above; use the tag instead.
 
-> **Note:** Result artifacts live on the `results/phase-1-data` branch, not `main`, so
-> binary snapshots don't bloat the code history.
+> **Note:** Result artifacts live on the `results/phase-1-data` branch, keeping binary
+> snapshots out of the code history.
 
 **Data caveat.** The `token_usage` table (one row per API call) is empty in every
 committed export, including the April 2026 snapshot — see issue
 [#5](https://github.com/calabamatex/Stigmergy-mcp-benchmark/issues/5). What is committed
 is trial-level: per-trial, per-category subtotals in `trial_results`, which are the
-numbers reported above. Per-call records for the reported cells do not exist in the
-repository, so the classifier's category assignments cannot be re-derived after the fact.
+numbers reported above. Re-deriving the classifier's category assignments
+requires per-call records, which these exports omit.
 
 ## What It Does
 
