@@ -37,7 +37,7 @@ One model (`claude-sonnet-4-5`, temperature 0), one parameterized sequential-pip
 
 ## Data and limitations
 
-Trial-level rows are committed for the April 28 export snapshot. The 10-agent ten-trial cell and the 5 to 8 agent cells are documented by committed command-line transcripts; their trial-level rows are in a local database and are being exported to the repository. Three mock-provider rows in the export are harness self-tests and are excluded. The 5, 7, and 8 agent cells lost trials to API credit exhaustion mid-run; the 8-agent cell has no valid trials. Conditions ran in a fixed order. The classifier contains a rule that treats tool definitions differently by condition; it has no effect on these results but must be fixed before shared-state controls are run. The harness's "UNRELIABLE" cross-validation flag fires on every run at temperature 0 and is uninformative.
+Trial-level rows are committed for the April 28 export snapshot. The 10-agent ten-trial cell and the 5 to 8 agent cells are documented by committed command-line transcripts; their trial-level rows are committed at `benchmark-exports/20260918-103059/`. Three mock-provider rows in the export are harness self-tests and are excluded. The 5, 7, and 8 agent cells lost trials to API credit exhaustion mid-run; the 8-agent cell has no valid trials. Conditions ran in a fixed order. The classifier contains a rule that treats tool definitions differently by condition; it has no effect on these results but must be fixed before shared-state controls are run. The harness's "UNRELIABLE" cross-validation flag fires on every run at temperature 0 and is uninformative.
 
 ## What's next
 
